@@ -1,0 +1,38 @@
+{
+	"name": "ts-hover-prettify",
+	"version": "0.2.2",
+	"description": "Create a Next.js app with some advanced features and custom libraries",
+	"repository": "https://github.com/MarcoAntolini/ts-hover-prettify",
+	"homepage": "https://github.com/MarcoAntolini/ts-hover-prettify#readme",
+	"author": "Marco Antolini",
+	"license": "MIT",
+	"main": "dist/index.js",
+	"module": "dist/index.mjs",
+	"types": "dist/index.d.ts",
+	"scripts": {
+		"t-build": "tsup src/index.ts --dts",
+		"t-lint": "tsc",
+		"t-release": "pnpm lint && pnpm build && changeset publish",
+		"build": "turbo t-build",
+		"lint": "turbo t-lint",
+		"release": "turbo t-release"
+	},
+	"devDependencies": {
+		"@changesets/cli": "^2.26.2",
+		"@types/node": "^20.6.3",
+		"@typescript-eslint/eslint-plugin": "^6.7.2",
+		"@typescript-eslint/parser": "^6.7.2",
+		"tsup": "^7.2.0",
+		"turbo": "^1.10.14",
+		"typescript": "^5.2.2"
+	},
+	"prettier": {
+		"arrowParens": "always",
+		"trailingComma": "all",
+		"semi": true,
+		"singleQuote": false,
+		"printWidth": 120,
+		"tabWidth": 2,
+		"useTabs": true
+	}
+}
