@@ -1,6 +1,6 @@
 {
 	"name": "ts-hover-prettify",
-	"version": "1.0.0",
+	"version": "1.1.0",
 	"description": "Utility to make the hover of a typescript object more readable",
 	"repository": "https://github.com/MarcoAntolini/ts-hover-prettify",
 	"homepage": "https://github.com/MarcoAntolini/ts-hover-prettify#readme",
