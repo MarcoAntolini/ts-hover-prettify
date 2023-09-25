@@ -1,7 +1,7 @@
 {
 	"name": "ts-hover-prettify",
-	"version": "0.2.2",
-	"description": "Create a Next.js app with some advanced features and custom libraries",
+	"version": "1.0.0",
+	"description": "Utility to make the hover of a typescript object more readable",
 	"repository": "https://github.com/MarcoAntolini/ts-hover-prettify",
 	"homepage": "https://github.com/MarcoAntolini/ts-hover-prettify#readme",
 	"author": "Marco Antolini",
@@ -10,7 +10,7 @@
 	"module": "dist/index.mjs",
 	"types": "dist/index.d.ts",
 	"scripts": {
-		"t-build": "tsup src/index.ts --dts",
+		"t-build": "tsup src/index.ts --format cjs,esm --dts-resolve --minify --sourcemap --clean",
 		"t-lint": "tsc",
 		"t-release": "pnpm lint && pnpm build && changeset publish",
 		"build": "turbo t-build",

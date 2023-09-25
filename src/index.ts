@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/ban-types */
-type Prettify<T> = {
+export type Prettify<T> = {
 	[K in keyof T]: T[K];
 } & {};
