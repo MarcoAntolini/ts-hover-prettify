@@ -35,7 +35,8 @@ jobs:
             echo "VSCE_PAT secret not set — skipping Visual Studio Marketplace publish."
             exit 0
           fi
-          pnpm exec vsce publish --packagePath "build/ts-hover-prettify-vscode-*.vsix"
+          VSIX=$(ls build/ts-hover-prettify-vscode-*.vsix)
+          pnpm exec vsce publish --packagePath "$VSIX"
 
       - name: Publish to Open VSX
         working-directory: packages/vscode-extension
@@ -46,4 +47,5 @@ jobs:
             echo "OVSX_PAT secret not set — skipping Open VSX publish."
             exit 0
           fi
-          pnpm dlx ovsx publish build/ts-hover-prettify-vscode-*.vsix
+          VSIX=$(ls build/ts-hover-prettify-vscode-*.vsix)
+          pnpm dlx ovsx publish "$VSIX"

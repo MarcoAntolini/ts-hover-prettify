@@ -19,7 +19,7 @@ The repository was restructured as a pnpm + Turborepo workspace. The original np
 
 Extension releases are published by tagging `vscode-v*` (see `.github/workflows/publish-extension.yml`). The npm package continues to use Changesets (see `.github/workflows/publish.yml`).
 
-No new npm version was required for the monorepo layout alone; see the package changelog for npm release history.
+See the package changelog for npm release history.
 
 ---
 
@@ -27,6 +27,7 @@ No new npm version was required for the monorepo layout alone; see the package c
 
 ### `ts-hover-prettify` (npm)
 
+- **1.1.1** — Updated README and changelog for the pnpm monorepo layout; no API changes.
 - **1.1.0** — README and LICENSE published with the package.
 - **1.0.0** — Initial release: `Prettify` type and `global` entry for declaration projects.
 

@@ -43,7 +43,7 @@ import type { Prettify } from "ts-hover-prettify";
 
 Ensure the declaration file is part of your TypeScript project (`include`, `files`, or `types`).
 
-Published package: [npm — ts-hover-prettify](https://www.npmjs.com/package/ts-hover-prettify) (current version **1.1.0**).
+Published package: [npm — ts-hover-prettify](https://www.npmjs.com/package/ts-hover-prettify) (current version **1.1.1**).
 
 Details: [packages/ts-hover-prettify/README.md](packages/ts-hover-prettify/README.md).
 
