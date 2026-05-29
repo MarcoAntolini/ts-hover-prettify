@@ -1,5 +1,6 @@
 {
 	"name": "ts-hover-prettify-vscode",
+	"private": true,
 	"displayName": "TS Hover Prettify",
 	"description": "Prettier TypeScript hover tooltips via the Prettify utility type (zero-config)",
 	"version": "0.1.4",
