@@ -7,7 +7,7 @@
 Flatten intersected TypeScript types in hover tooltips with `Prettify<T>`.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)](https://github.com/MarcoAntolini/ts-hover-prettify/blob/main/LICENSE)
-[![Stars](https://img.shields.io/github/stars/MarcoAntolini/ts-hover-prettify?style=for-the-badge)](https://github.com/MarcoAntolini/ts-hover-prettify/stargazers)
+[![Stars](https://img.shields.io/badge/dynamic/json?style=for-the-badge&label=STARS&color=blue&query=stargazers_count&url=https://api.github.com/repos/MarcoAntolini/ts-hover-prettify)](https://github.com/MarcoAntolini/ts-hover-prettify/stargazers)
 [![npm](https://img.shields.io/npm/dm/ts-hover-prettify?style=for-the-badge)](https://www.npmjs.com/package/ts-hover-prettify)
 
 </div>
@@ -24,7 +24,7 @@ Pick one approach per project — do not mix the extension’s auto-generated `.
 
 ### Extension (zero-config)
 
-1. Install **TS Hover Prettify** (`marcoantolini.ts-hover-prettify-vscode`) from a `.vsix` or, after release, from the Marketplace / Open VSX.
+1. Install **TS Hover Prettify** (`marcoantolini.ts-hover-prettify-vscode`) from the [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=marcoantolini.ts-hover-prettify-vscode) or [Open VSX](https://open-vsx.org/extension/marcoantolini/ts-hover-prettify-vscode).
 2. Open a TypeScript workspace and wrap types with `Prettify<…>`.
 3. Hover the alias. Run **TypeScript: Restart TS Server** if hovers do not update after install.
 
@@ -155,4 +155,4 @@ Issues and pull requests are welcome on [GitHub](https://github.com/MarcoAntolin
 
 ## License
 
-[MIT](LICENSE) — Copyright 2023 Marco Antolini.
+[MIT](LICENSE) — Copyright 2026 Marco Antolini.

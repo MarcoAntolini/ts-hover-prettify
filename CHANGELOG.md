@@ -32,6 +32,7 @@ See the package changelog for npm release history.
 
 ### `ts-hover-prettify-vscode` (extension)
 
+- **0.2.2** — Fix README stars badge to use shields.io dynamic JSON in `for-the-badge` style.
 - **0.2.1** — Republish to Open VSX after 0.2.0 was rejected and left inactive in the registry.
 - **0.2.0** — CI publish workflow tolerates "already exists" on either registry so retries can finish Open VSX / Marketplace independently.
 - **0.1.4** — Nested `tsconfig.json` discovery; aligned virtual types path with `.vscode/ts-hover-prettify.d.ts`; avoid breaking implicit tsconfig projects.

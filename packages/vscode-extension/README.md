@@ -5,7 +5,7 @@
 Prettier TypeScript hover tooltips via the `Prettify` utility type — zero npm setup.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)](https://github.com/MarcoAntolini/ts-hover-prettify/blob/main/LICENSE)
-[![Stars](https://img.shields.io/github/stars/MarcoAntolini/ts-hover-prettify?style=for-the-badge)](https://github.com/MarcoAntolini/ts-hover-prettify/stargazers)
+[![Stars](https://img.shields.io/badge/dynamic/json?style=for-the-badge&label=STARS&color=blue&query=stargazers_count&url=https://api.github.com/repos/MarcoAntolini/ts-hover-prettify)](https://github.com/MarcoAntolini/ts-hover-prettify/stargazers)
 
 **Extension ID:** `marcoantolini.ts-hover-prettify-vscode` · **Publisher:** marcoantolini
 
@@ -28,8 +28,8 @@ For `tsc`, CI, or non-VS Code editors, use the [npm package](../ts-hover-prettif
 
 | Source | Steps |
 |--------|--------|
+| **Marketplace** | Install from the [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=marcoantolini.ts-hover-prettify-vscode) or [Open VSX](https://open-vsx.org/extension/marcoantolini/ts-hover-prettify-vscode) |
 | **VSIX (local / CI)** | From repo root: `pnpm package:extension` → install `build/ts-hover-prettify-vscode-*.vsix` via **Extensions: Install from VSIX** |
-| **Marketplace / Open VSX** | After publish (workflow tag `vscode-v*` or `publish-extension.yml`); search for **TS Hover Prettify** |
 
 Install the VSIX from VS Code or Cursor, not from the Visual Studio installer.
 

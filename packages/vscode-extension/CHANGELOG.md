@@ -2,6 +2,12 @@
 
 All notable changes to **ts-hover-prettify-vscode** are documented here.
 
+## [0.2.2] - 2026-05-29
+
+### Fixed
+
+- README stars badge: use shields.io dynamic JSON so the count renders in `for-the-badge` style when the GitHub stars endpoint is unavailable.
+
 ## [0.2.1] - 2026-05-29
 
 ### Fixed
