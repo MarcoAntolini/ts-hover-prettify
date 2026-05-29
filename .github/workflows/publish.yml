@@ -4,26 +4,39 @@ on:
     workflows: ["CI"]
     types:
       - completed
-  push:
-    branches:
-      - "main"
-      - "master"
+  workflow_dispatch:
 
 concurrency: ${{ github.workflow }}-${{ github.ref }}
 
 jobs:
   publish:
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    if: >
+      github.event_name == 'workflow_dispatch' ||
+      (github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success')
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: pnpm/action-setup@v2
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
         with:
           version: 8
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
-          node-version: 16.x
-          cache: "pnpm"
+          node-version: 20.x
+          registry-url: https://registry.npmjs.org
+          cache: pnpm
+
+      - name: Verify npm publish credentials
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          if [ -z "$NODE_AUTH_TOKEN" ]; then
+            echo "::error::NPM_TOKEN secret is not set. Add an npm Automation token with publish access to ts-hover-prettify under GitHub repo Settings → Secrets → Actions."
+            exit 1
+          fi
+          npm whoami || {
+            echo "::error::npm auth failed. Regenerate an npm Automation token for account 'marco.antolini' and update the NPM_TOKEN secret."
+            exit 1
+          }
 
       - run: pnpm install --frozen-lockfile
       - name: Create Release Pull Request or Publish
@@ -34,3 +47,4 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
