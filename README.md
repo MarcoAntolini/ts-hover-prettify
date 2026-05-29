@@ -1,17 +1,26 @@
+<div align="center">
+
+<img src="packages/vscode-extension/icon.png" alt="TS Hover Prettify logo" width="128" />
+
 # ts-hover-prettify
 
-Flatten intersected TypeScript types in **hover tooltips** by wrapping them in `Prettify<T>`.
+Flatten intersected TypeScript types in hover tooltips with `Prettify<T>`.
 
-Without `Prettify`, hovering an intersection often shows `{ a: string } & { b: number } & …`. With `Prettify`, the same hover tends to show a single object: `{ a: string; b: number; … }`. This uses the well-known mapped-type pattern ([Total TypeScript — Prettify](https://www.totaltypescript.com/concepts/the-prettify-helper)); it affects type display only and has no runtime cost.
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)](https://github.com/MarcoAntolini/ts-hover-prettify/blob/main/LICENSE)
+[![Stars](https://img.shields.io/github/stars/MarcoAntolini/ts-hover-prettify?style=for-the-badge)](https://github.com/MarcoAntolini/ts-hover-prettify/stargazers)
+[![npm](https://img.shields.io/npm/dm/ts-hover-prettify?style=for-the-badge)](https://www.npmjs.com/package/ts-hover-prettify)
 
-## Install
+</div>
 
-| Approach | When to use it | Setup |
-|----------|----------------|--------|
-| **[VS Code / Cursor extension](packages/vscode-extension)** | Editor-only, no npm dependency | Install or load the extension — `Prettify` is injected for you |
-| **[npm package](packages/ts-hover-prettify)** | `tsc`, CI, other editors, explicit control | `npm add -D ts-hover-prettify` + a one-line global types file |
+## What is this?
 
-You only need one approach per project. Do not mix the extension’s auto-generated `.vscode/ts-hover-prettify.d.ts` with a manual npm setup unless you know they stay in sync.
+Without `Prettify`, hovering an intersection often shows `{ a: string } & { b: number } & …`. With `Prettify`, the same hover tends to show a single object: `{ a: string; b: number; … }`.
+
+This monorepo ships two ways to use the same mapped-type pattern ([Total TypeScript — Prettify](https://www.totaltypescript.com/concepts/the-prettify-helper)): an [npm package](packages/ts-hover-prettify) for `tsc`, CI, and any editor, and a [VS Code / Cursor extension](packages/vscode-extension) that injects the type with zero npm setup. It affects type display only and has no runtime cost.
+
+## Quick Start
+
+Pick one approach per project — do not mix the extension’s auto-generated `.vscode/ts-hover-prettify.d.ts` with a manual npm setup unless you know they stay in sync.
 
 ### Extension (zero-config)
 
@@ -19,37 +28,25 @@ You only need one approach per project. Do not mix the extension’s auto-genera
 2. Open a TypeScript workspace and wrap types with `Prettify<…>`.
 3. Hover the alias. Run **TypeScript: Restart TS Server** if hovers do not update after install.
 
-On first use the extension may create `.vscode/ts-hover-prettify.d.ts` and append that path to `tsconfig.json` `include` or `files` when those arrays already exist. Projects without `include`/`files` still receive `Prettify` via the TypeScript server plugin.
-
 Details: [packages/vscode-extension/README.md](packages/vscode-extension/README.md).
 
 ### npm package
 
 ```bash
-npm add -D ts-hover-prettify
+pnpm add -D ts-hover-prettify
 ```
 
-Add `prettify.d.ts` (name is up to you) at the project root or anywhere included by `tsconfig.json`:
+Add a declaration file included by your `tsconfig.json`:
 
 ```typescript
 import "ts-hover-prettify/global";
 ```
 
-Or import the type where needed:
-
-```typescript
-import type { Prettify } from "ts-hover-prettify";
-```
-
-Ensure the declaration file is part of your TypeScript project (`include`, `files`, or `types`).
-
-Published package: [npm — ts-hover-prettify](https://www.npmjs.com/package/ts-hover-prettify) (current version **1.1.1**).
-
 Details: [packages/ts-hover-prettify/README.md](packages/ts-hover-prettify/README.md).
 
-## Example
+### Example
 
-**Before** — intersection shown as chained `&` types in the hover:
+**Before** — intersection shown as chained `&` types:
 
 ```typescript
 type Intersected = { a: string } & { b: number } & { c: boolean };
@@ -65,10 +62,68 @@ type Intersected = Prettify<
 // Hover: { a: string; b: number; c: boolean; }
 ```
 
-Runnable demos:
+Runnable demos: [examples/intersected-types](examples/intersected-types) (extension) · [examples/intersected-types-npm](examples/intersected-types-npm) (npm).
 
-- Extension only: [examples/intersected-types](examples/intersected-types)
-- npm + `tsc`: [examples/intersected-types-npm](examples/intersected-types-npm)
+### Development
+
+Requirements: Node.js 16+, [pnpm](https://pnpm.io/) 8.
+
+```bash
+pnpm install
+pnpm build
+pnpm lint
+pnpm verify:example-extension
+pnpm verify:example-npm
+pnpm package:extension   # VSIX → packages/vscode-extension/build/
+```
+
+Local extension debugging: open `packages/vscode-extension`, press **F5**, then open `examples/intersected-types` in the Extension Development Host.
+
+## Architecture
+
+```mermaid
+graph TD
+    Root[ts-hover-prettify monorepo]
+    Root --> Lib[packages/ts-hover-prettify]
+    Root --> Ext[packages/vscode-extension]
+    Root --> ExExt[examples/intersected-types]
+    Root --> ExNpm[examples/intersected-types-npm]
+    Ext --> Lib
+    ExNpm --> Lib
+    ExExt --> Ext
+```
+
+## Project Structure
+
+```
+.github/
+  workflows/
+.changeset/
+examples/
+  intersected-types/
+  intersected-types-npm/
+packages/
+  ts-hover-prettify/
+  vscode-extension/
+scripts/
+CHANGELOG.md
+LICENSE
+package.json
+pnpm-lock.yaml
+pnpm-workspace.yaml
+turbo.json
+tsconfig.json
+```
+
+## Documentation
+
+| Resource | Description |
+|----------|-------------|
+| [packages/ts-hover-prettify/README.md](packages/ts-hover-prettify/README.md) | npm install, global setup, and API |
+| [packages/vscode-extension/README.md](packages/vscode-extension/README.md) | VS Code / Cursor extension usage |
+| [examples/intersected-types](examples/intersected-types) | Extension workflow demo |
+| [examples/intersected-types-npm](examples/intersected-types-npm) | npm + `tsc` workflow demo |
+| [CHANGELOG.md](CHANGELOG.md) | Release history |
 
 ## What this does and does not do
 
@@ -83,32 +138,6 @@ Runnable demos:
 - Rewrite hovers for types you never wrapped (aliases, inferred types, etc. stay as TypeScript prints them).
 - Replace dedicated “expand any hover” extensions or VS Code’s experimental expandable hover (`typescript.experimental.expandableHover` with a recent TypeScript workspace version).
 
-## Repository layout
-
-```
-packages/
-  ts-hover-prettify/      # npm library
-  vscode-extension/       # VS Code / Cursor extension (ts-hover-prettify-vscode)
-examples/
-  intersected-types/      # extension workflow (no committed prettify.d.ts)
-  intersected-types-npm/  # npm workflow + pnpm verify:example-npm
-```
-
-## Development
-
-Requirements: Node.js 16+, [pnpm](https://pnpm.io/) 8.
-
-```bash
-pnpm install
-pnpm build          # library + extension
-pnpm lint
-pnpm verify:example-extension   # extension example + tsc
-pnpm verify:example-npm          # npm example + tsc
-pnpm package:extension           # VSIX → packages/vscode-extension/build/
-```
-
-Local extension debugging: open `packages/vscode-extension`, press **F5**, then open `examples/intersected-types` in the Extension Development Host.
-
 ## Release
 
 | Artifact | Mechanism |
@@ -116,7 +145,13 @@ Local extension debugging: open `packages/vscode-extension`, press **F5**, then 
 | **npm** (`ts-hover-prettify`) | [Changesets](https://github.com/changesets/changesets) on `main` / `master` — [`.github/workflows/publish.yml`](.github/workflows/publish.yml) |
 | **Extension** (`ts-hover-prettify-vscode`) | Git tag `vscode-v*` or manual workflow — [`.github/workflows/publish-extension.yml`](.github/workflows/publish-extension.yml) |
 
-Changelog: [CHANGELOG.md](CHANGELOG.md).
+## Contributing
+
+Issues and pull requests are welcome on [GitHub](https://github.com/MarcoAntolini/ts-hover-prettify).
+
+<a href="https://github.com/MarcoAntolini/ts-hover-prettify/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=MarcoAntolini/ts-hover-prettify" />
+</a>
 
 ## License
 

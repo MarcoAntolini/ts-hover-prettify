@@ -1,20 +1,28 @@
+<div align="center">
+
 # ts-hover-prettify
 
-[![npm version](https://img.shields.io/npm/v/ts-hover-prettify)](https://www.npmjs.com/package/ts-hover-prettify)
+Provide `Prettify<T>` so TypeScript hovers show a single object shape instead of a chain of intersections.
 
-Provide the `Prettify<T>` utility type so TypeScript hovers show a single object shape instead of a chain of intersections.
+[![npm version](https://img.shields.io/npm/v/ts-hover-prettify?style=for-the-badge)](https://www.npmjs.com/package/ts-hover-prettify)
+[![npm downloads](https://img.shields.io/npm/dm/ts-hover-prettify?style=for-the-badge)](https://www.npmjs.com/package/ts-hover-prettify)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)](https://github.com/MarcoAntolini/ts-hover-prettify/blob/main/LICENSE)
 
-This package is for projects where you want the type in source control or need `tsc` / CI without the [VS Code extension](../vscode-extension). The extension injects the same type automatically; pick one approach per repo.
+</div>
 
-## Install
+## What is this?
+
+This package exports the `Prettify<T>` utility type for projects where you want the type in source control or need `tsc` / CI without the [VS Code extension](../vscode-extension). The extension injects the same type automatically — pick one approach per repo.
+
+The mapped-type pattern only affects how TypeScript prints types in the language service. It is erased at compile time and does not change JavaScript output.
+
+## Quick Start
 
 ```bash
-npm add -D ts-hover-prettify
-# pnpm add -D ts-hover-prettify
+pnpm add -D ts-hover-prettify
+# npm add -D ts-hover-prettify
 # yarn add -D ts-hover-prettify
 ```
-
-## Setup
 
 ### Global `Prettify` (recommended)
 
@@ -24,7 +32,7 @@ Create a declaration file included by your `tsconfig.json`, for example `prettif
 import "ts-hover-prettify/global";
 ```
 
-Add it to `compilerOptions.types`, or to top-level `include` / `files`, for example:
+Add it to `compilerOptions.types`, or to top-level `include` / `files`:
 
 ```json
 {
@@ -68,7 +76,7 @@ export type Prettify<T> = {
 } & {};
 ```
 
-Implementation matches the common community pattern (also documented as `Compute`, `Expand`, etc.). It only affects how TypeScript prints types in the language service; it is erased at compile time and does not change JavaScript output.
+Implementation matches the common community pattern (also documented as `Compute`, `Expand`, etc.).
 
 ## Behaviour and limits
 
@@ -80,6 +88,22 @@ Implementation matches the common community pattern (also documented as `Compute
 
 Use the [ts-hover-prettify-vscode](../vscode-extension) extension instead of this package if you only need editor hovers and accept workspace injection of `.vscode/ts-hover-prettify.d.ts`.
 
+## Documentation
+
+| Resource | Description |
+|----------|-------------|
+| [Root README](../../README.md) | Monorepo overview and install options |
+| [Extension README](../vscode-extension/README.md) | Zero-config editor setup |
+| [CHANGELOG.md](./CHANGELOG.md) | Package release notes |
+
+## Contributing
+
+Issues and pull requests are welcome on [GitHub](https://github.com/MarcoAntolini/ts-hover-prettify).
+
+<a href="https://github.com/MarcoAntolini/ts-hover-prettify/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=MarcoAntolini/ts-hover-prettify" />
+</a>
+
 ## License
 
-[MIT](../../LICENSE).
+[MIT](../../LICENSE) — Copyright 2023 Marco Antolini.
