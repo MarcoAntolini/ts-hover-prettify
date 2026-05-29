@@ -1,7 +1,5 @@
 <div align="center">
 
-<img src="icon.png" alt="TS Hover Prettify logo" width="128" />
-
 # TS Hover Prettify
 
 Prettier TypeScript hover tooltips via the `Prettify` utility type — zero npm setup.
@@ -46,7 +44,7 @@ type Intersected = Prettify<
 >;
 ```
 
-3. Hover `Intersected` in the editor.
+1. Hover `Intersected` in the editor.
 
 No `npm install` and no hand-written `prettify.d.ts` are required.
 
