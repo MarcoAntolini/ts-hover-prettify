@@ -1,9 +1,21 @@
 {
 	"$schema": "https://turbo.build/schema.json",
 	"pipeline": {
-		"build": {
-			"outputs": [".next/**", "!.next/cache/**"]
+		"t-build": {
+			"dependsOn": ["^t-build"],
+			"outputs": ["dist/**"]
 		},
-		"lint": {}
+		"t-lint": {
+			"dependsOn": ["^t-lint"]
+		},
+		"t-release": {
+			"dependsOn": ["^t-build"],
+			"cache": false
+		},
+		"t-package": {
+			"dependsOn": ["^t-build"],
+			"outputs": ["build/**"],
+			"cache": false
+		}
 	}
 }

@@ -1,9 +1,0 @@
-pnpm-lock.yaml
-.npmrc
-tsconfig.json
-.eslintrc.js
-.gitignore
-src
-.changeset
-.github
-.turbo

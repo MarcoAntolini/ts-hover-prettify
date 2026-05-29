@@ -1,13 +1,6 @@
-# ts-hover-prettify
+# Changelog
 
-## 1.1.0
+Package-specific changelogs:
 
-### Minor Changes
-
-- 84e1b5b: added readme and license
-
-## 1.0.0
-
-### Major Changes
-
-- bf4d904: First release on the package
+- [ts-hover-prettify](packages/ts-hover-prettify/CHANGELOG.md)
+- [ts-hover-prettify-vscode](packages/vscode-extension/CHANGELOG.md)

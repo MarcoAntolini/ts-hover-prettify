@@ -1,0 +1,39 @@
+name: Publish Extension
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - "vscode-v*"
+
+concurrency: ${{ github.workflow }}-${{ github.ref }}
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 8
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20.x
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm run build
+      - run: pnpm package:extension
+
+      - name: Publish to VS Marketplace
+        if: ${{ secrets.VSCE_PAT }}
+        run: pnpm exec vsce publish --packagePath "build/ts-hover-prettify-vscode-*.vsix"
+        working-directory: packages/vscode-extension
+        env:
+          VSCE_PAT: ${{ secrets.VSCE_PAT }}
+
+      - name: Publish to Open VSX
+        if: ${{ secrets.OVSX_PAT }}
+        run: pnpm dlx ovsx publish build/ts-hover-prettify-vscode-*.vsix
+        working-directory: packages/vscode-extension
+        env:
+          OVSX_PAT: ${{ secrets.OVSX_PAT }}

@@ -1,0 +1,32 @@
+{
+	"name": "ts-hover-prettify",
+	"version": "1.1.0",
+	"description": "Utility to make the hover of a typescript object more readable",
+	"repository": "https://github.com/MarcoAntolini/ts-hover-prettify",
+	"homepage": "https://github.com/MarcoAntolini/ts-hover-prettify#readme",
+	"author": "Marco Antolini",
+	"license": "MIT",
+	"main": "dist/index.js",
+	"module": "dist/index.mjs",
+	"types": "dist/index.d.ts",
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"import": "./dist/index.mjs",
+			"require": "./dist/index.js"
+		},
+		"./global": {
+			"types": "./dist/global.d.ts"
+		}
+	},
+	"files": ["dist"],
+	"scripts": {
+		"t-build": "tsup src/index.ts --format cjs,esm --dts-resolve --minify --sourcemap --clean && node -e \"require('node:fs').copyFileSync('global.d.ts','dist/global.d.ts')\"",
+		"t-lint": "tsc --noEmit",
+		"t-release": "pnpm run t-lint && pnpm run t-build"
+	},
+	"devDependencies": {
+		"tsup": "^7.2.0",
+		"typescript": "^5.2.2"
+	}
+}

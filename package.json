@@ -1,28 +1,23 @@
 {
-	"name": "ts-hover-prettify",
-	"version": "1.1.0",
-	"description": "Utility to make the hover of a typescript object more readable",
+	"name": "ts-hover-prettify-monorepo",
+	"private": true,
+	"description": "Monorepo for ts-hover-prettify npm package and VS Code extension",
 	"repository": "https://github.com/MarcoAntolini/ts-hover-prettify",
-	"homepage": "https://github.com/MarcoAntolini/ts-hover-prettify#readme",
 	"author": "Marco Antolini",
 	"license": "MIT",
-	"main": "dist/index.js",
-	"module": "dist/index.mjs",
-	"types": "dist/index.d.ts",
 	"scripts": {
-		"t-build": "tsup src/index.ts --format cjs,esm --dts-resolve --minify --sourcemap --clean",
-		"t-lint": "tsc",
-		"t-release": "pnpm lint && pnpm build && changeset publish",
-		"build": "turbo t-build",
-		"lint": "turbo t-lint",
-		"release": "turbo t-release"
+		"build": "turbo run t-build",
+		"lint": "turbo run t-lint",
+		"release": "pnpm run build && changeset publish",
+		"package:extension": "turbo run t-package --filter=ts-hover-prettify-vscode",
+		"verify:example-npm": "tsc --noEmit -p examples/intersected-types-npm/tsconfig.json",
+		"verify:example-extension": "node scripts/ensure-example-types.mjs && tsc --noEmit -p examples/intersected-types/tsconfig.json"
 	},
 	"devDependencies": {
 		"@changesets/cli": "^2.26.2",
 		"@types/node": "^20.6.3",
 		"@typescript-eslint/eslint-plugin": "^6.7.2",
 		"@typescript-eslint/parser": "^6.7.2",
-		"tsup": "^7.2.0",
 		"turbo": "^1.10.14",
 		"typescript": "^5.2.2"
 	},

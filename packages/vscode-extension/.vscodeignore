@@ -1,0 +1,8 @@
+.vscode/**
+build/**
+.turbo/**
+src/**
+scripts/**
+tsconfig.json
+**/*.map
+src/**/*.ts

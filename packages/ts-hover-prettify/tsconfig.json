@@ -6,7 +6,8 @@
 		"esModuleInterop": true,
 		"forceConsistentCasingInFileNames": true,
 		"skipLibCheck": true,
-		"noEmit": true
+		"noEmit": true,
+		"noUncheckedIndexedAccess": true
 	},
-	"exclude": ["node_modules", "dist", "packages/*/dist"]
+	"include": ["src/**/*.ts", ".vscode/ts-hover-prettify.d.ts"]
 }

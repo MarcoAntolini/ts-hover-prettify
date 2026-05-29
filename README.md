@@ -1,63 +1,60 @@
 # ts-hover-prettify
 
-This tool helps you make more readable and prettier hover tooltips for your Typescript code.
+Make TypeScript hover tooltips more readable by flattening intersected types with the `Prettify` utility type.
 
-## Usage
+## Choose your install
 
-First, you need to install the package:
+| Option | Best for | Setup |
+|--------|----------|--------|
+| **[VS Code / Cursor extension](packages/vscode-extension)** | Zero-config in the editor | Install the extension — no `prettify.d.ts` required |
+| **[npm package](packages/ts-hover-prettify)** | CI, non-VS Code editors, explicit control | `npm add -D ts-hover-prettify` + `import "ts-hover-prettify/global"` |
+
+## Monorepo
+
+```
+packages/
+  ts-hover-prettify/     # npm library (published to npm)
+  vscode-extension/     # VS Code / Cursor extension
+examples/
+  intersected-types/       # extension-only test (no prettify.d.ts)
+  intersected-types-npm/   # npm package + tsc verification
+```
+
+## Development
 
 ```bash
-npm add -D ts-hover-prettify
+pnpm install
+pnpm build          # build library + extension
+pnpm lint
 ```
 
-And then you have to add a file `prettify.d.ts` to your project with the following content:
+### Extension (local)
 
-```typescript
-import 'ts-hover-prettify';
-```
+1. `pnpm build`
+2. Open `packages/vscode-extension` in VS Code/Cursor
+3. Press **F5** to launch the Extension Development Host with [`examples/intersected-types`](examples/intersected-types) (extension-only — no `prettify.d.ts`)
+4. Optional: `pnpm package:extension` → install `packages/vscode-extension/build/*.vsix`
 
-That's it! Now you can use it inside your project.
+For npm/`tsc` without the extension: [`examples/intersected-types-npm`](examples/intersected-types-npm) (`pnpm verify:example-npm`)
+
+See [packages/vscode-extension/README.md](packages/vscode-extension/README.md) for details.
+
+### npm package
+
+See [packages/ts-hover-prettify/README.md](packages/ts-hover-prettify/README.md).
+
+## Release
+
+- **npm**: Changesets on `master` / `main` (see `.github/workflows/publish.yml`)
+- **Extension**: `.github/workflows/publish-extension.yml` (VS Marketplace + Open VSX, manual or tagged)
 
 ## Example
 
-Let's say you have a type like this:
-
-```typescript
-type Intersected = {
-  a: string;
-} & {
-  b: number;
-} & {
-  c: boolean;
-};
-```
-
-Hovering over `Intersected` would show you the following tooltip:
-
-```typescript
-/**
- * { a: string; } & { b: number; } & { c: boolean; }
- */
-```
-
-But wrapping it inside of `Prettify` you can make it more readable:
-
 ```typescript
 type Intersected = Prettify<
-  {
-    a: string;
-  } & {
-    b: number;
-  } & {
-    c: boolean;
-  }
+  { a: string } & { b: number } & { c: boolean }
 >;
-
-/**
- * {
- *   a: string;
- *   b: number;
- *   c: boolean;
- * }
- */
+// Hover shows: { a: string; b: number; c: boolean; }
 ```
+
+Full walkthrough in the [package README](packages/ts-hover-prettify/README.md).

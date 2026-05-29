@@ -1,3 +1,45 @@
-node_modules
-dist
-.turbo
+# Dependencies
+node_modules/
+
+# Build outputs
+dist/
+build/
+out/
+
+# Turbo
+.turbo/
+
+# VS Code extension packages (built locally; CI publishes from workflow)
+*.vsix
+
+# Environment and secrets
+.env
+.env.*
+!.env.example
+
+# Logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# TypeScript
+*.tsbuildinfo
+
+# Test coverage
+coverage/
+
+# Caches
+.eslintcache
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE (user-specific; shared launch/tasks under packages/ stay tracked)
+.idea/
+*.swp
+*.swo
+.vscode/settings.json
+.vscode/*.code-workspace
