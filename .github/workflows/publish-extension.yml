@@ -36,7 +36,18 @@ jobs:
             exit 0
           fi
           VSIX=$(ls build/ts-hover-prettify-vscode-*.vsix)
-          pnpm exec vsce publish --packagePath "$VSIX"
+          set +e
+          OUTPUT=$(pnpm exec vsce publish --packagePath "$VSIX" 2>&1)
+          EXIT=$?
+          set -e
+          echo "$OUTPUT"
+          if [ "$EXIT" -ne 0 ]; then
+            if echo "$OUTPUT" | grep -qi "already exists"; then
+              echo "Version already published to VS Marketplace — continuing."
+              exit 0
+            fi
+            exit "$EXIT"
+          fi
 
       - name: Publish to Open VSX
         working-directory: packages/vscode-extension
@@ -48,4 +59,15 @@ jobs:
             exit 0
           fi
           VSIX=$(ls build/ts-hover-prettify-vscode-*.vsix)
-          pnpm dlx ovsx publish "$VSIX"
+          set +e
+          OUTPUT=$(pnpm dlx ovsx publish "$VSIX" 2>&1)
+          EXIT=$?
+          set -e
+          echo "$OUTPUT"
+          if [ "$EXIT" -ne 0 ]; then
+            if echo "$OUTPUT" | grep -qi "already exists"; then
+              echo "Version already published to Open VSX — continuing."
+              exit 0
+            fi
+            exit "$EXIT"
+          fi

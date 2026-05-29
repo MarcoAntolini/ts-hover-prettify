@@ -2,6 +2,12 @@
 
 All notable changes to **ts-hover-prettify-vscode** are documented here.
 
+## [0.2.0] - 2026-05-29
+
+### Fixed
+
+- CI: treat "already exists" as a non-fatal skip when publishing to VS Marketplace or Open VSX, so a partial publish can be retried without blocking the other registry.
+
 ## [0.1.4] - 2026-05-29
 
 ### Fixed

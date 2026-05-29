@@ -25,12 +25,14 @@ See the package changelog for npm release history.
 
 ### `ts-hover-prettify` (npm)
 
+- **1.1.2** — Rewrite READMEs and tidy license metadata; no API changes.
 - **1.1.1** — Updated README and changelog for the pnpm monorepo layout; no API changes.
 - **1.1.0** — README and LICENSE published with the package.
 - **1.0.0** — Initial release: `Prettify` type and `global` entry for declaration projects.
 
 ### `ts-hover-prettify-vscode` (extension)
 
+- **0.2.0** — CI publish workflow tolerates "already exists" on either registry so retries can finish Open VSX / Marketplace independently.
 - **0.1.4** — Nested `tsconfig.json` discovery; aligned virtual types path with `.vscode/ts-hover-prettify.d.ts`; avoid breaking implicit tsconfig projects.
 - **0.1.2** — Virtual type injection for narrow `include` lists.
 - **0.1.1** — Reliable plugin registration and TS server restart on activation.

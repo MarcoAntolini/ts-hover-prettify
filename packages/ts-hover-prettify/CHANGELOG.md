@@ -1,12 +1,18 @@
 # Changelog
 
+All notable changes to **ts-hover-prettify** are documented here.
+
+## 1.1.2
+
+### Patch Changes
+
+- Rewrite READMEs and tidy license metadata. No API changes; `Prettify` and `import "ts-hover-prettify/global"` unchanged.
+
 ## 1.1.1
 
 ### Patch Changes
 
 - Update package README and changelog for the pnpm monorepo layout. No API changes; `Prettify` and `import "ts-hover-prettify/global"` unchanged.
-
-All notable changes to **ts-hover-prettify** are documented here.
 
 ## [1.1.0] - 2023-09-25
 
