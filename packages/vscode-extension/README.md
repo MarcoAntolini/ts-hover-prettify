@@ -1,52 +1,89 @@
 # TS Hover Prettify (VS Code / Cursor)
 
-Zero-config extension that injects the `Prettify` utility type into TypeScript projects so hover tooltips on wrapped types are easier to read.
+**Extension ID:** `marcoantolini.ts-hover-prettify-vscode`  
+**Publisher:** marcoantolini
+
+Inject the `Prettify<T>` utility type into TypeScript workspaces so you can wrap intersections and get flatter hover text—without adding `ts-hover-prettify` as an npm dependency.
+
+## Requirements
+
+- VS Code **1.85.0** or newer (or a Cursor build with compatible VS Code APIs)
+- Built-in **TypeScript and JavaScript Language Features** extension enabled for the workspace
 
 ## Install
 
-- **VS Code**: search for **TS Hover Prettify** on the Marketplace (after publish), or install a `.vsix` locally.
-- **Cursor**: install from Open VSX (after publish), or install from VSIX.
+| Source | Steps |
+|--------|--------|
+| **VSIX (local / CI)** | From repo root: `pnpm package:extension` → install `build/ts-hover-prettify-vscode-*.vsix` via **Extensions: Install from VSIX** |
+| **Marketplace / Open VSX** | After publish (workflow tag `vscode-v*` or `publish-extension.yml`); search for **TS Hover Prettify** |
+
+Install the VSIX from VS Code or Cursor, not from the Visual Studio installer.
 
 ## Usage
 
-1. Install and enable the extension.
-2. Wrap intersected types with `Prettify<...>` in your TypeScript code.
-3. Hover over the type alias to see the flattened object shape.
+1. Enable the extension for your workspace.
+2. Use `Prettify` on type aliases you want readable hovers for:
 
-No `npm install` and no `prettify.d.ts` file required.
+```typescript
+type Intersected = Prettify<
+  { a: string } & { b: number } & { c: boolean }
+>;
+```
 
-## Local development
+3. Hover `Intersected` in the editor.
 
-From the **repository root**:
+No `npm install` and no hand-written `prettify.d.ts` are required.
+
+### What the extension changes in your repo
+
+On activation (and when opening TypeScript files), the extension:
+
+1. Walks the workspace for `tsconfig.json` files (skips `node_modules`, `dist`, etc., max depth 12).
+2. Writes or updates `.vscode/ts-hover-prettify.d.ts` with the `Prettify` definition next to each config.
+3. Appends `.vscode/ts-hover-prettify.d.ts` to existing `include` or `files` arrays in those configs.
+4. If a config has **no** `include` or `files`, it does **not** add a lone `include` (that would shrink the project). The bundled **TypeScript server plugin** still exposes `Prettify` via `getExternalFiles`.
+
+If `tsconfig.json` or the types file changes, the extension runs **TypeScript: Restart TS Server**.
+
+You may commit `.vscode/ts-hover-prettify.d.ts` and tsconfig edits, or gitignore them—both are valid; the extension will recreate them when needed.
+
+## Example workspace
+
+From the repository root:
 
 ```bash
 pnpm install
 pnpm build
 ```
 
-Open `packages/vscode-extension` in VS Code/Cursor, press **F5** (Run Extension), and open [`examples/intersected-types`](../../examples/intersected-types) in the Extension Development Host (that folder has no `prettify.d.ts` — types must come from the extension).
+**F5 debugging:** open this folder (`packages/vscode-extension`), run **Run Extension**, open [examples/intersected-types](../../examples/intersected-types) in the Extension Development Host, then open `demo.ts` and hover `Intersected`.
 
-To build a VSIX:
-
-```bash
-pnpm package:extension
-```
-
-The VSIX is written to `packages/vscode-extension/build/`. Install via **Extensions: Install from VSIX**.
-
-## Requirements
-
-- VS Code `^1.85.0` (or compatible Cursor build)
-- TypeScript enabled in the workspace
+**VSIX:** package as above, open `examples/intersected-types` or the monorepo root (0.1.4+ discovers nested tsconfigs).
 
 ## Troubleshooting
 
-- Run **TypeScript: Restart TS Server** after installing or updating the extension (also runs automatically on first activation).
-- If `Prettify` is not recognized, confirm the extension is enabled and the workspace uses the built-in TypeScript extension.
-- Install the VSIX from **VS Code or Cursor** (Extensions → Install from VSIX), not from Visual Studio’s installer.
-- Use **v0.1.4+**. Opening the monorepo root is supported; the extension discovers nested `tsconfig.json` files (e.g. `examples/intersected-types`).
-- Older VSIX builds may not inject types correctly.
+| Symptom | What to try |
+|---------|-------------|
+| `Prettify` unknown | Confirm the extension is enabled; run **TypeScript: Restart TS Server** |
+| No change after install | Reload the window; reopen the folder; use extension **0.1.4+** for monorepo roots |
+| Types file missing from project | Check `tsconfig.json` `include` / `files`; for implicit configs, rely on the server plugin (0.1.2+) |
+| Wrong editor | Use VS Code / Cursor only |
 
 ## npm alternative
 
-Prefer a devDependency instead? Use the [ts-hover-prettify](../ts-hover-prettify) package and see [examples/intersected-types-npm](../../examples/intersected-types-npm).
+For `tsc`, CI, or non-VS Code editors, use the [ts-hover-prettify](../ts-hover-prettify) package and [examples/intersected-types-npm](../../examples/intersected-types-npm).
+
+## Local development
+
+```bash
+# from repository root
+pnpm install
+pnpm build
+pnpm package:extension   # optional VSIX
+```
+
+Open this directory in VS Code/Cursor and press **F5**.
+
+## License
+
+[MIT](LICENSE).

@@ -39,7 +39,7 @@ async function build() {
 		}),
 		esbuild.build({
 			entryPoints: [path.join(packageRoot, "src", "tsserver-plugin", "index.ts")],
-			bundle: false,
+			bundle: true,
 			platform: "node",
 			target: "node18",
 			format: "cjs",

@@ -24,16 +24,26 @@ jobs:
       - run: pnpm run build
       - run: pnpm package:extension
 
+      # secrets.* is not valid in step-level `if` (editor + GitHub Actions rules).
+      # Pass tokens via env and skip inside the script when unset.
       - name: Publish to VS Marketplace
-        if: ${{ secrets.VSCE_PAT }}
-        run: pnpm exec vsce publish --packagePath "build/ts-hover-prettify-vscode-*.vsix"
         working-directory: packages/vscode-extension
         env:
           VSCE_PAT: ${{ secrets.VSCE_PAT }}
+        run: |
+          if [ -z "$VSCE_PAT" ]; then
+            echo "VSCE_PAT secret not set — skipping Visual Studio Marketplace publish."
+            exit 0
+          fi
+          pnpm exec vsce publish --packagePath "build/ts-hover-prettify-vscode-*.vsix"
 
       - name: Publish to Open VSX
-        if: ${{ secrets.OVSX_PAT }}
-        run: pnpm dlx ovsx publish build/ts-hover-prettify-vscode-*.vsix
         working-directory: packages/vscode-extension
         env:
           OVSX_PAT: ${{ secrets.OVSX_PAT }}
+        run: |
+          if [ -z "$OVSX_PAT" ]; then
+            echo "OVSX_PAT secret not set — skipping Open VSX publish."
+            exit 0
+          fi
+          pnpm dlx ovsx publish build/ts-hover-prettify-vscode-*.vsix

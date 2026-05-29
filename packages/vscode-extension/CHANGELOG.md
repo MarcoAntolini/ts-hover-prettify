@@ -1,27 +1,34 @@
-# ts-hover-prettify-vscode
+# Changelog
 
-## 0.1.4
+All notable changes to **ts-hover-prettify-vscode** are documented here.
 
-### Patch Changes
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-- Discover and patch every nested `tsconfig.json` in the workspace (fixes monorepo roots where only `examples/...` had an `include` list).
-- Align the tsserver plugin virtual file with `.vscode/ts-hover-prettify.d.ts` (same path as the extension writes).
-- Avoid adding a lone `include` to tsconfigs that rely on implicit file discovery (prevents shrinking the project).
+## [0.1.4] - 2026-05-29
 
-## 0.1.2
+### Fixed
 
-### Patch Changes
+- Discover and patch every nested `tsconfig.json` in the workspace (monorepo roots where only subfolders had an `include` list).
+- Align the tsserver plugin virtual file with `.vscode/ts-hover-prettify.d.ts` (same path the extension writes on disk).
+- Do not add a standalone `include` array to tsconfigs that rely on implicit file discovery; avoids shrinking the project file set.
 
-- Inject `Prettify` via an in-project virtual `.ts-hover-prettify-global.d.ts` so VSIX installs work with narrow `tsconfig` `include` lists (e.g. only `demo.ts`).
+## [0.1.2]
 
-## 0.1.1
+### Fixed
 
-### Patch Changes
+- Inject `Prettify` through the TypeScript server plugin (`getExternalFiles`) so VSIX installs work when `tsconfig.json` `include` lists only application files (for example `demo.ts` only).
 
-- Fix zero-config `Prettify` injection: module-level `getExternalFiles`, `onConfigurationChanged`, and TS server restart on first activation.
+## [0.1.1]
 
-## 0.1.0
+### Fixed
 
-### Minor Changes
+- Register `getExternalFiles` at plugin module scope so the language service loads the global types file reliably.
+- Restart the TypeScript server on first activation when workspace files or `tsconfig.json` were updated.
 
-- Initial VS Code / Cursor extension with zero-config `Prettify` global type injection via TypeScript server plugin.
+## [0.1.0]
+
+### Added
+
+- Initial VS Code / Cursor extension.
+- TypeScript server plugin (`ts-hover-prettify-plugin`) for zero-config `Prettify` in hovers.
+- Workspace activation: write `.vscode/ts-hover-prettify.d.ts` and extend `tsconfig.json` when `include` or `files` is already present.

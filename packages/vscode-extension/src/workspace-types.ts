@@ -1,13 +1,11 @@
 import * as vscode from "vscode";
+import {
+	GLOBAL_TYPES_CONTENT,
+	GLOBAL_TYPES_FILE,
+	GLOBAL_TYPES_RELATIVE,
+	VSCODE_DIR,
+} from "./global-types";
 
-export const GLOBAL_TYPES_CONTENT = `type Prettify<T> = {
-	[K in keyof T]: T[K];
-} & {};
-`;
-
-const TYPES_FILE = "ts-hover-prettify.d.ts";
-const VSCODE_DIR = ".vscode";
-const TYPES_RELATIVE = `${VSCODE_DIR}/${TYPES_FILE}`;
 const SKIP_DIR_NAMES = new Set(["node_modules", "dist", "build", ".git", "out"]);
 
 export async function ensureWorkspaceTypes(folder: vscode.WorkspaceFolder): Promise<boolean> {
@@ -63,7 +61,7 @@ async function discoverTsconfigUris(folder: vscode.WorkspaceFolder): Promise<vsc
 
 async function ensureProjectTypes(tsconfigUri: vscode.Uri): Promise<boolean> {
 	const projectRoot = vscode.Uri.joinPath(tsconfigUri, "..");
-	const typesUri = vscode.Uri.joinPath(projectRoot, VSCODE_DIR, TYPES_FILE);
+	const typesUri = vscode.Uri.joinPath(projectRoot, VSCODE_DIR, GLOBAL_TYPES_FILE);
 	const vscodeDir = vscode.Uri.joinPath(projectRoot, VSCODE_DIR);
 
 	try {
@@ -84,7 +82,7 @@ async function ensureProjectTypes(tsconfigUri: vscode.Uri): Promise<boolean> {
 		typesWritten = true;
 	}
 
-	const includeChanged = await ensureTsconfigIncludes(tsconfigUri, TYPES_RELATIVE);
+	const includeChanged = await ensureTsconfigIncludes(tsconfigUri, GLOBAL_TYPES_RELATIVE);
 	return typesWritten || includeChanged;
 }
 
@@ -92,7 +90,7 @@ async function ensureTsconfigIncludes(tsconfigUri: vscode.Uri, relativeInclude: 
 	const bytes = await vscode.workspace.fs.readFile(tsconfigUri);
 	const text = Buffer.from(bytes).toString("utf8");
 
-	if (text.includes(TYPES_FILE)) {
+	if (text.includes(GLOBAL_TYPES_FILE)) {
 		return false;
 	}
 

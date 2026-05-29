@@ -1,13 +1,27 @@
-# ts-hover-prettify
+# Changelog
 
-## 1.1.0
+All notable changes to **ts-hover-prettify** are documented here.
 
-### Minor Changes
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-- 84e1b5b: added readme and license
+## [1.1.0] - 2023-09-25
 
-## 1.0.0
+### Added
 
-### Major Changes
+- README and MIT LICENSE included in the published tarball.
 
-- bf4d904: First release on the package
+### Changed
+
+- No API changes; `Prettify` and `import "ts-hover-prettify/global"` unchanged from 1.0.0.
+
+## [1.0.0] - 2023-09-25
+
+### Added
+
+- Initial npm release.
+- `Prettify<T>` mapped type exported from the package entry.
+- `./global` export: ambient `Prettify` when imported from a project declaration file.
+- Dual CJS / ESM build (`dist/index.js`, `dist/index.mjs`) and TypeScript declarations.
+
+[1.1.0]: https://github.com/MarcoAntolini/ts-hover-prettify/compare/v1.0.0...v1.1.0
+[1.0.0]: https://github.com/MarcoAntolini/ts-hover-prettify/releases/tag/v1.0.0

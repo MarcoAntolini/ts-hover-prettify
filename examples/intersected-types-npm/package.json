@@ -1,0 +1,7 @@
+{
+	"name": "intersected-types-npm-example",
+	"private": true,
+	"devDependencies": {
+		"ts-hover-prettify": "workspace:*"
+	}
+}
