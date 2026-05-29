@@ -65,7 +65,12 @@ jobs:
           set -e
           echo "$OUTPUT"
           if [ "$EXIT" -ne 0 ]; then
-            if echo "$OUTPUT" | grep -qi "already exists"; then
+            if echo "$OUTPUT" | grep -qi "already published" && echo "$OUTPUT" | grep -qi "isn't active"; then
+              echo "::error::Open VSX has this version uploaded but inactive (often stuck under review)."
+              echo "Delete the inactive version at https://open-vsx.org/user-settings/extensions or contact Open VSX support, then retry."
+              exit "$EXIT"
+            fi
+            if echo "$OUTPUT" | grep -Eqi "already exists|already published"; then
               echo "Version already published to Open VSX — continuing."
               exit 0
             fi

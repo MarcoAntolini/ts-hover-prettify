@@ -3,7 +3,7 @@
 	"private": true,
 	"displayName": "TS Hover Prettify",
 	"description": "Prettier TypeScript hover tooltips via the Prettify utility type (zero-config)",
-	"version": "0.2.0",
+	"version": "0.2.1",
 	"publisher": "marcoantolini",
 	"license": "MIT",
 	"repository": "https://github.com/MarcoAntolini/ts-hover-prettify",

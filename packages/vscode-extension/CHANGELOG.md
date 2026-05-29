@@ -2,6 +2,12 @@
 
 All notable changes to **ts-hover-prettify-vscode** are documented here.
 
+## [0.2.1] - 2026-05-29
+
+### Fixed
+
+- Republish to Open VSX after 0.2.0 was rejected and left inactive in the registry.
+
 ## [0.2.0] - 2026-05-29
 
 ### Fixed
